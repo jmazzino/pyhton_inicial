@@ -1,22 +1,74 @@
-import tkinter as tk
+import sys
 
-root = tk.Tk()
+from Tkinter import *
+import ttk
+import time
+from datetime import datetime
 
-canvas1 = tk.Canvas(root, width=400, height=300)
-canvas1.pack()
-
-entry1 = tk.Entry(root)
-canvas1.create_window(200, 140, window=entry1)
-
-
-def getSquareRoot():
-    x1 = entry1.get()
-
-    label1 = tk.Label(root, text=float(x1) ** 0.5)
-    canvas1.create_window(200, 230, window=label1)
+# --- functions ----
 
 
-button1 = tk.Button(text="Get the Square Root", command=getSquareRoot)
-canvas1.create_window(200, 180, window=button1)
+def quit():
+    print("Have a great day! Goodbye :)")
+    sys.exit(0)
 
+
+def display():
+    x_var.set(list(d))
+
+
+def add(*args):
+    global stock
+    global d
+    stock = stock_Entry.get()
+    Quantity = Quantity_Entry.get()
+    if stock not in d:
+        d[stock] = Quantity
+    else:
+        d[stock] += Quantity
+
+
+# --- main ---
+
+x = list()
+d = dict()
+
+now = datetime.now()
+
+root = Tk()
+root.title("Homework 5 216020088")
+
+x_var = StringVar()
+
+mainframe = ttk.Frame(root, padding="6 6 20 20")
+mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+
+ttk.Label(
+    mainframe,
+    text="you are accesing this on day %s of month %s of %s"
+    % (now.day, now.month, now.year)
+    + " at exactly %s:%s:%s" % (now.hour, now.minute, now.second),
+    foreground="yellow",
+    background="Black",
+).grid(column=0, row=0)
+
+stock_Entry = ttk.Entry(mainframe, width=60, textvariable="stock")
+stock_Entry.grid(column=0, row=1, sticky=W)
+ttk.Label(mainframe, text="Please enter the stock name").grid(
+    column=1, row=1, sticky=(N, W, E, S)
+)
+
+Quantity_Entry = ttk.Entry(mainframe, width=60, textvariable="Quantity")
+Quantity_Entry.grid(column=0, row=2, sticky=W)
+ttk.Label(mainframe, text="Please enter the quantity").grid(
+    column=1, row=2, sticky=(N, W, E, S)
+)
+
+ttk.Button(mainframe, text="Add", command=add).grid(column=0, row=3, sticky=W)
+ttk.Button(mainframe, text="Display", command=display).grid(column=0, row=3, sticky=S)
+ttk.Button(mainframe, text="Exit", command=quit).grid(column=0, row=3, sticky=E)
+ttk.Label(mainframe, textvariable=x_var).grid(column=0, row=4, sticky=W)
+
+for child in mainframe.winfo_children():
+    child.grid_configure(padx=5, pady=5)
 root.mainloop()
