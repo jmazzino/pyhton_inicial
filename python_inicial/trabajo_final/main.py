@@ -262,21 +262,17 @@ def f_mod():
                 for element in records:
                     tree.delete(element)
 
-                # Consiguiendo datos
+                # SQL
                 sql1 = """ UPDATE personas
               SET nombre = ? ,
                   apellido = ? ,
                   interno = ? ,
                   email = ?
               WHERE id = ?"""
-                # sql2 = f"UPDATE personas SET apellido = {apellido} where id = {id}"
-                # sql3 = f"UPDATE personas SET interno = {interno} where id = {id}"
-                # sql4 = f"UPDATE personas SET email = {email} where id = {id}"
+
                 cursorObj = con.cursor()
                 cursorObj.execute(sql1, task)
-                # cursorObj.execute(sql2)
-                # cursorObj.execute(sql3)
-                # cursorObj.execute(sql4)
+
                 con.commit()
 
                 resultado = cursorObj.fetchall()
